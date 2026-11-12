@@ -1,2 +1,2 @@
-# every-mole
-Every Mole: a chemistry book in four parts (publishe site)
+# my-chemistry
+My Chemistry: a chemistry book in four parts (published site)

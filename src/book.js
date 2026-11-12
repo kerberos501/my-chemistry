@@ -8,7 +8,7 @@ const markDone = id => { const d = done(); if (!d[id]) { d[id] = 1; store.set('d
 
 function cover() {
   const d = done();
-  document.title = 'Every Mole · a chemistry book in four parts';
+  document.title = 'My Chemistry · a chemistry book in four parts';
   book.innerHTML = `<article class="spread single"><div class="page cover">
     <h1>Every <em>Mole</em></h1>
     <p class="lede">${LESSONS.length} short lessons in four parts, from weighing out atoms to finding how fast they react. One idea to a page.</p>
@@ -22,7 +22,7 @@ function cover() {
 }
 
 function glossary() {
-  document.title = 'Glossary · Every Mole';
+  document.title = 'Glossary · My Chemistry';
   book.innerHTML = `<article class="spread single"><div class="page cover">
     <p class="lesson-no">${GLOSSARY.length} key words</p><h1 class="title">Glossary</h1>
     <p>Each word is defined on the page where it is first needed. The number after a definition is that page.</p>
@@ -31,7 +31,7 @@ function glossary() {
 }
 
 function lesson(l) {
-  document.title = `${l.id} ${l.title} · Every Mole`;
+  document.title = `${l.id} ${l.title} · My Chemistry`;
   const prev = LESSONS[l.index - 1], next = LESSONS[l.index + 1];
   const keys = Object.entries(l.teach);
   book.innerHTML = `<article class="spread" data-u="${l.unit}">

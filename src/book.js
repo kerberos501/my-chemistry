@@ -10,7 +10,7 @@ function cover() {
   const d = done();
   document.title = 'My Chemistry · a chemistry book in four parts';
   book.innerHTML = `<article class="spread single"><div class="page cover">
-    <h1>Every <em>Mole</em></h1>
+    <h1>My <em>Chemistry</em></h1>
     <p class="lede">${LESSONS.length} short lessons in four parts, from weighing out atoms to finding how fast they react. One idea to a page.</p>
     <p class="how">On every spread: tick a prediction, lift the flap to see why, follow a worked example, then try one yourself to earn the stamp.</p>
     <div class="parts">${UNITS.map(u => `<section class="part" data-u="${u.id}">

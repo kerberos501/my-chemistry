@@ -1,9 +1,16 @@
 import { UNITS, LESSONS, lessonById, GLOSSARY, CONCEPTS } from './data/index.js';
 import { esc, store, readNumber, closeEnough } from './ui.js';
-import { mountModel } from './model-1-1.js';
+import { MODELS } from './models.js';
+import { reviewById, reviewForUnit, practiceFor } from './data/review.js';
+import { reviewPage } from './review.js';
 
 const book = document.getElementById('book');
 const done = () => store.get('done') ?? {};
+// The order of the pages: every lesson, with a part's review after its last lesson.
+const PAGES = UNITS.flatMap(u => [...u.lessons.map(l => l.id), ...(reviewForUnit[u.id] ? [reviewForUnit[u.id].id] : [])]);
+const pageName = id => (lessonById[id] ? `${id} ${lessonById[id].title}` : reviewById[id].title);
+const turn = id => { const i = PAGES.indexOf(id), prev = PAGES[i - 1], next = PAGES[i + 1];
+  return `<nav class="turn" aria-label="Turn the page">${prev ? `<a href="#/${prev}" rel="prev">‹ ${esc(pageName(prev))}</a>` : '<a href="#/">‹ Contents</a>'}<span></span>${next ? `<a href="#/${next}" rel="next">${esc(pageName(next))} ›</a>` : '<a href="#/glossary">Glossary ›</a>'}</nav>`; };
 const markDone = id => { const d = done(); if (!d[id]) { d[id] = 1; store.set('done', d); } };
 
 function cover() {
@@ -16,8 +23,9 @@ function cover() {
     <div class="parts">${UNITS.map(u => `<section class="part" data-u="${u.id}">
       <h2><small>Part ${u.n}</small>${esc(u.title)}</h2><p>${esc(u.blurb)}</p>
       <ol>${u.lessons.map(l => `<li><a href="#/${l.id}"><span class="n">${l.id}</span><span>${esc(l.title)}${d[l.id] ? '<span class="done" title="Stamp earned">✓</span>' : ''}</span><span class="h">${esc(l.head)}</span></a></li>`).join('')}</ol>
+      ${reviewForUnit[u.id] ? `<p class="revlink"><a href="#/${reviewForUnit[u.id].id}">${esc(reviewForUnit[u.id].title)}</a> · ${reviewForUnit[u.id].questions.length} practice questions with the working shown</p>` : ''}
     </section>`).join('')}</div>
-    <p class="legend">Each part ends with one of the course exams: Part 1 with Exam 1, Part 2 with Exam 2, Part 3 with Exam 3 and Part 4 with the Final. Stamps are remembered on this device only.</p>
+    <p class="legend">Each part ends with one of the course exams: Part 1 with Exam 1, Part 2 with Exam 2, Part 3 with Exam 3 and Part 4 with the Final. A part with a review page has practice questions for its exam. Stamps are remembered on this device only.</p>
   </div></article>`;
 }
 
@@ -32,7 +40,7 @@ function glossary() {
 
 function lesson(l) {
   document.title = `${l.id} ${l.title} · My Chemistry`;
-  const prev = LESSONS[l.index - 1], next = LESSONS[l.index + 1];
+  const practice = practiceFor(l.id);
   const keys = Object.entries(l.teach);
   book.innerHTML = `<article class="spread" data-u="${l.unit}">
     <section class="page left">
@@ -45,6 +53,7 @@ function lesson(l) {
       <h2 class="k">Key words</h2>
       <dl class="keys">${keys.map(([, [t, d]]) => `<div><dt>${esc(t)}</dt> <dd>${esc(d)}</dd></div>`).join('')}</dl>
       ${l.needs.some(n => CONCEPTS[n]) ? `<h2 class="k">You will need</h2><p style="font-size:15px">${[...new Map(l.needs.filter(n => CONCEPTS[n]).map(n => [CONCEPTS[n].lesson, n])).keys()].sort((a, b) => lessonById[a].index - lessonById[b].index).map(id => `<a href="#/${id}">${id} ${esc(lessonById[id].title)}</a>`).join(' · ')}</p>` : ''}
+      ${practice.length ? `<h2 class="k">More practice</h2><p class="practice">${esc(practice[0].review.title)}: ${practice.map(({ review, q }) => `<a href="#/${review.id}/q${q.n}">question ${q.n}</a>`).join(' · ')}</p>` : ''}
     </section>
     <section class="page right">
       <div class="runhead"><span>${esc(l.figure)}</span><span>${l.index + 1} of ${LESSONS.length}</span></div>
@@ -60,15 +69,15 @@ function lesson(l) {
           : `<form class="tryrow"><label class="sr" for="ans">Your answer</label><input id="ans" inputmode="decimal" autocomplete="off" placeholder="your answer"><span class="unit">${esc(l.try.unit ?? '')}</span><button class="btn2" type="submit">Check</button></form>`}
         <div class="out" aria-live="polite"></div></div>
     </section></article>
-    <nav class="turn" aria-label="Turn the page">${prev ? `<a href="#/${prev.id}" rel="prev">‹ ${prev.id} ${esc(prev.title)}</a>` : '<a href="#/">‹ Contents</a>'}<span></span>${next ? `<a href="#/${next.id}" rel="next">${next.id} ${esc(next.title)} ›</a>` : '<a href="#/glossary">Glossary ›</a>'}</nav>`;
+    ${turn(l.id)}`;
 
   const stamp = () => { markDone(l.id); const t = book.querySelector('#try'); if (!t.querySelector('.stamp')) t.insertAdjacentHTML('beforeend', '<span class="stamp">DONE</span>'); };
   if (done()[l.id]) stamp();
 
-  // the model: built for lesson 1.1, described for the rest
+  // the working model, or the description of the one that is planned
   const model = book.querySelector('#model');
-  if (l.id === '1.1') mountModel(model, stamp);
-  else model.innerHTML = `<div class="figure"><p class="cap">${esc(l.figure)}</p><p class="todo">The working model for this page is planned but not built yet. Lesson 1.1 shows what one looks like.</p></div>`;
+  if (MODELS[l.id]) MODELS[l.id](model, stamp);
+  else model.innerHTML = `<div class="figure"><p class="cap">${esc(l.figure)}</p><p class="todo">The working model for this page is planned but not built yet. The lessons in Part 1 show what one looks like.</p></div>`;
 
   // predict, then lift the flap
   const pr = book.querySelector('#predict');
@@ -103,16 +112,17 @@ function lesson(l) {
   });
 }
 
+const here = () => decodeURIComponent(location.hash.replace(/^#\/?/, ''));
 function route() {
-  const id = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
-  if (lessonById[id]) lesson(lessonById[id]); else if (id === 'glossary') glossary(); else cover();
-  window.scrollTo(0, 0);
+  const [id, sub] = here().split('/');
+  if (lessonById[id]) lesson(lessonById[id]); else if (reviewById[id]) reviewPage(book, reviewById[id], sub, turn(id)); else if (id === 'glossary') glossary(); else cover();
+  if (!reviewById[id] || !sub) window.scrollTo(0, 0);
 }
 addEventListener('hashchange', route);
 addEventListener('keydown', e => {
   if (e.target.closest('input, button, a, select, textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
-  const cur = lessonById[decodeURIComponent(location.hash.replace(/^#\/?/, ''))];
-  if (e.key === 'ArrowRight') location.hash = cur ? (LESSONS[cur.index + 1] ? '#/' + LESSONS[cur.index + 1].id : '#/glossary') : '#/' + LESSONS[0].id;
-  if (e.key === 'ArrowLeft' && cur) location.hash = cur.index ? '#/' + LESSONS[cur.index - 1].id : '#/';
+  const i = PAGES.indexOf(here().split('/')[0]);
+  if (e.key === 'ArrowRight') location.hash = i < 0 ? '#/' + PAGES[0] : PAGES[i + 1] ? '#/' + PAGES[i + 1] : '#/glossary';
+  if (e.key === 'ArrowLeft' && i >= 0) location.hash = i ? '#/' + PAGES[i - 1] : '#/';
 });
 route();

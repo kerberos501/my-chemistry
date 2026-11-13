@@ -1,4 +1,5 @@
 import { UNITS, LESSONS, lessonById, CONCEPTS, EXAMS, ITEMS, PRIOR, OUTSIDE } from './data/index.js';
+import { MODELS } from './models.js';
 import { esc, store } from './ui.js';
 
 const main = document.getElementById('main');
@@ -30,7 +31,7 @@ const notes = UNITS.map(u => `<h2 data-u="${u.id}" id="notes-${u.id}" style="col
     ${l.gap ? `<h4>${l.exam.length ? 'Added beyond the exam' : 'Why it is in the course'}</h4><p>${esc(l.gap)}</p>` : ''}
     <h4>Common errors</h4><ul>${l.traps.map(o => `<li>${esc(o)}</li>`).join('')}</ul>
     <h4>Questions to ask</h4><ul>${l.ask.map(o => `<li>${esc(o)}</li>`).join('')}</ul>
-    <h4>The model</h4><p>${esc(l.figure)}.${l.id === '1.1' ? ' Built.' : ' Planned.'}</p>
+    <h4>The model</h4><p>${esc(l.figure)}.${MODELS[l.id] ? ' Built.' : ' Planned.'}</p>
   </section>`; }).join('')}`).join('');
 
 main.innerHTML = `

@@ -4,7 +4,9 @@ Every lesson was read and judged on one question: would a picture or a working m
 
 "Review deck" marks where a model was shaped by a common error or question from the course review decks.
 
-**Status:** Parts 1 and 2 are built (27 of 51 lessons). Parts 3 and 4 are planned (24 lessons).
+**Status:** Parts 1, 2 and 3 are built (41 of 51 lessons). Part 4 is planned (10 lessons).
+
+Every picture in the book is drawn for the book, in code, so each one shows exactly the example on its page and can be changed with it.
 
 Every lesson also links to the matching section of OpenStax *Chemistry 2e*, a free online textbook, under “Read more”. Those are links only: nothing is copied from that book.
 
@@ -45,24 +47,28 @@ Every lesson also links to the matching section of OpenStax *Chemistry 2e*, a fr
 | 2.13 Size | Periodic table of circles to scale, with ions | Both trends at a glance; ions against their atoms (review deck) |
 | 2.14 Losing electrons | Bar chart of successive ionization energies | The sudden step when a core electron is removed (review deck) |
 
-## Part 3. Bonds, shapes and solids (planned)
+## Part 3. Bonds, shapes and solids (built)
 
-| Lesson | Model planned | Why it helps |
+| Lesson | Model | Why it helps |
 |---|---|---|
-| 3.1 Why atoms bond | Slider of electronegativity difference; shared electrons drift, then jump | Bond type is a continuum |
-| 3.2 Lewis structures | Electron counter: place bonds and lone pairs until none are left | The counting method step by step (review deck) |
-| 3.3 Formal charge and resonance | Formal-charge calculator on alternative structures | Choosing the best structure |
-| 3.4 Breaking the octet rule | Central atoms with a running count of 6, 8, 10 or 12 electrons | Which atoms can and cannot expand (review deck) |
-| 3.5 Molecular shape | Choose bonded atoms and lone pairs; the shape and its name appear | Electron-domain geometry against molecular shape (review deck) |
-| 3.6 Polar molecules | Bond-dipole arrows that add or cancel as the shape changes | Polar bonds do not always make a polar molecule; cis and trans (review deck) |
-| 3.7 Hybrid orbitals | Domain count mapped to hybridization, with the shapes | Lone pairs count as domains (review deck) |
-| 3.8 Sigma and pi bonds | A structure whose bonds are tallied as σ and π | Every bond has one σ; only multiple bonds have π (review deck) |
-| 3.9 Bond enthalpy | Ledger of bonds broken and formed beside an energy diagram | Broken minus formed, and only the bonds that change (review deck) |
-| 3.10 Forces between molecules | Pick a molecule; the forces it can have light up | Hydrogen bonding needs H on N, O or F (review deck) |
-| 3.11 Boiling points | Chart of boiling points across families of compounds | The jump for H₂O and HF; size against hydrogen bonding (review deck) |
-| 3.12 Solids | Simple, body-centred and face-centred cells with atom fractions counted | The hardest picture in the course to hold in the head |
-| 3.13 Density of a crystal | Unit cell to density, with the line along which atoms touch | Which diagonal goes with which cell (review deck) |
-| 3.14 X-ray diffraction | Two layers of atoms and a beam you tilt until the waves line up | The sine doubles, not the angle (review deck) |
+| 3.1 Why atoms bond | Pick two atoms; the shared pair drifts toward the stronger pull, or jumps | Bond type is a continuum set by the difference in electronegativity |
+| 3.2 Lewis structures | The five steps, one at a time, with a counter of electrons left to place | The counting method step by step (review deck) |
+| 3.3 Formal charge and resonance | Alternative drawings with a formal-charge table for every atom | Choosing the best structure; resonance as two equal drawings |
+| 3.4 Breaking the octet rule | Central atoms with a meter of 4, 6, 7, 8 or 10 electrons | Which atoms can and cannot expand (review deck) |
+| 3.5 Molecular shape | Choose domains and lone pairs; turn the molecule in three dimensions | Electron-domain geometry against molecular shape (review deck) |
+| 3.6 Polar molecules | Bond-dipole arrows on a molecule you can turn, and their sum | Polar bonds do not always make a polar molecule; cis and trans (review deck) |
+| 3.7 Hybrid orbitals | Domain count mapped to the orbitals that mix and the hybrids that result | Lone pairs count as domains (review deck) |
+| 3.8 Sigma and pi bonds | Structures with σ bonds in black and π bonds in colour, and a tally | Every link has one σ; only multiple bonds have π (review deck) |
+| 3.9 Bond enthalpy | Ledger of bonds broken and formed beside an energy path | Broken minus formed, and only the bonds that change (review deck) |
+| 3.10 Forces between molecules | Pick a molecule; the forces it can have light up | Hydrogen bonding needs H on N, O or F: CH₃F is the trap (review deck) |
+| 3.11 Boiling points | Boiling points of the hydrides of four groups | The jump for H₂O, NH₃ and HF; size against hydrogen bonding (review deck) |
+| 3.12 Solids | Build a cubic cell from corner, face, body and edge atoms; the fractions are counted | The hardest picture in the course to hold in the head |
+| 3.13 Density of a crystal | A slice through the cell showing the line where atoms touch, then the density worked out | Which diagonal goes with which cell (review deck) |
+| 3.14 X-ray diffraction | Two layers of atoms and a beam you tilt until the extra path is a whole number of wavelengths | The sine doubles, not the angle (review deck) |
+
+### Drawings with the worked answers
+
+Where the answer to a worked example is a structure, the structure is drawn when the last step is shown: 3.2 (CO₂), 3.3 (the three resonance forms of NO₃⁻ with formal charges), 3.4 (SF₆), 3.7 (H₂CO and SF₄), 3.8 (propene with its π bond marked), 3.10 (CH₃NH₂ with its N–H bonds marked) and 3.13 (the face diagonal of a face-centred cell). They live in `src/sketches.js`.
 
 ## Part 4. How fast (planned)
 
@@ -84,6 +90,6 @@ Every lesson also links to the matching section of OpenStax *Chemistry 2e*, a fr
 | Part | Source | Questions | Status |
 |---|---|---|---|
 | 1 | Exam 1 review deck | 24 | Built: answered on the page, working shown a step at a time, each linked to its lesson |
-| 2 | Exam 2 review deck (thermochemistry, quantum, periodic trends) | 18 | Planned; six questions need their figures redrawn (reaction tables, photoelectron spectra) |
+| 2 | Exam 2 review deck (thermochemistry, quantum, periodic trends) | 18 | Built; the photoelectron spectra in questions 12, 13 and 15 are redrawn from their peak data |
 | 3 | Exam 3 review deck (bonding, shape, forces, solids) | 36 | Planned; several questions need structures redrawn |
 | 4 | No deck yet | 0 | Needs a set of kinetics questions |

@@ -4,7 +4,9 @@ Every lesson was read and judged on one question: would a picture or a working m
 
 "Review deck" marks where a model was shaped by a common error or question from the course review decks.
 
-**Status:** Part 1 is built (13 of 13). Parts 2 to 4 are planned (38 lessons).
+**Status:** Parts 1 and 2 are built (27 of 51 lessons). Parts 3 and 4 are planned (24 lessons).
+
+Every lesson also links to the matching section of OpenStax *Chemistry 2e*, a free online textbook, under “Read more”. Those are links only: nothing is copied from that book.
 
 ## Part 1. Counting atoms (built)
 
@@ -24,9 +26,9 @@ Every lesson was read and judged on one question: would a picture or a working m
 | 1.12 Acids and bases | Titration | Adds base until the indicator turns, then calculates the unknown molarity | The equivalence point as an event; the 2 : 1 ratio for H₂SO₄ |
 | 1.13 Redox | Follow the electrons, and a bookkeeping table | Runs a metal-in-solution reaction; steps through oxidation-number sums | Electrons lost equal electrons gained; oxidized means reducing agent (review deck) |
 
-## Part 2. Energy and the atom (planned)
+## Part 2. Energy and the atom (built)
 
-| Lesson | Model planned | Why it helps |
+| Lesson | Model | Why it helps |
 |---|---|---|
 | 2.1 System and surroundings | Piston with heat and work arrows and an energy bar | The signs of q and w are the most missed idea (review deck) |
 | 2.2 Specific heat | Two materials on equal burners with thermometers | Same heat, different temperature rise |

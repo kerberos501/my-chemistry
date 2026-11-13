@@ -103,7 +103,7 @@ Answer: 0.375 L
 **Questions to ask.**
 - Why is the 2 in “2 mol KClO₃” exact but the 2 in “2 g” not?
 
-**Model.** A balance, a measuring cylinder and a unit-conversion track.
+**Model.** A counter of significant figures and a unit-conversion track.
 
 **Why this lesson is here.** Not tested as an item of its own, but the Exam 1 rubric deducts for units and significant figures, Exam 1 Q9 needs mL → L, and Exam 3 needs pm → cm and Å → m.
 

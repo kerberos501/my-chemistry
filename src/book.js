@@ -3,6 +3,7 @@ import { esc, store, readNumber, closeEnough } from './ui.js';
 import { MODELS } from './models.js';
 import { reviewById, reviewForUnit, practiceFor } from './data/review.js';
 import { reviewPage } from './review.js';
+import { readMore } from './data/openstax.js';
 
 const book = document.getElementById('book');
 const done = () => store.get('done') ?? {};
@@ -40,7 +41,7 @@ function glossary() {
 
 function lesson(l) {
   document.title = `${l.id} ${l.title} · My Chemistry`;
-  const practice = practiceFor(l.id);
+  const practice = practiceFor(l.id), more = readMore(l.id);
   const keys = Object.entries(l.teach);
   book.innerHTML = `<article class="spread" data-u="${l.unit}">
     <section class="page left">
@@ -54,6 +55,7 @@ function lesson(l) {
       <dl class="keys">${keys.map(([, [t, d]]) => `<div><dt>${esc(t)}</dt> <dd>${esc(d)}</dd></div>`).join('')}</dl>
       ${l.needs.some(n => CONCEPTS[n]) ? `<h2 class="k">You will need</h2><p style="font-size:15px">${[...new Map(l.needs.filter(n => CONCEPTS[n]).map(n => [CONCEPTS[n].lesson, n])).keys()].sort((a, b) => lessonById[a].index - lessonById[b].index).map(id => `<a href="#/${id}">${id} ${esc(lessonById[id].title)}</a>`).join(' · ')}</p>` : ''}
       ${practice.length ? `<h2 class="k">More practice</h2><p class="practice">${esc(practice[0].review.title)}: ${practice.map(({ review, q }) => `<a href="#/${review.id}/q${q.n}">question ${q.n}</a>`).join(' · ')}</p>` : ''}
+      ${more ? `<h2 class="k">Read more</h2><p class="practice"><a href="${more.url}" target="_blank" rel="noopener">OpenStax Chemistry 2e: ${esc(more.title)}</a> <span class="aside">(a free online textbook; opens in a new tab)</span></p>` : ''}
     </section>
     <section class="page right">
       <div class="runhead"><span>${esc(l.figure)}</span><span>${l.index + 1} of ${LESSONS.length}</span></div>
@@ -77,7 +79,7 @@ function lesson(l) {
   // the working model, or the description of the one that is planned
   const model = book.querySelector('#model');
   if (MODELS[l.id]) MODELS[l.id](model, stamp);
-  else model.innerHTML = `<div class="figure"><p class="cap">${esc(l.figure)}</p><p class="todo">The working model for this page is planned but not built yet. The lessons in Part 1 show what one looks like.</p></div>`;
+  else model.innerHTML = `<div class="figure"><p class="cap">${esc(l.figure)}</p><p class="todo">The working model for this page is planned but not built yet. The lessons in Parts 1 and 2 show what one looks like.</p></div>`;
 
   // predict, then lift the flap
   const pr = book.querySelector('#predict');

@@ -35,7 +35,7 @@ export default {
     },
     {
       id: '1.2', title: 'Measured numbers', head: 'Units and significant figures',
-      figure: 'A balance, a measuring cylinder and a unit-conversion track',
+      figure: 'A counter of significant figures and a unit-conversion track',
       idea: ['Every measurement is a number and a unit. To change the unit, multiply by a conversion factor: a fraction equal to one, set so the old unit cancels.',
         'Significant figures show how well a number is known. An answer cannot be known better than the weakest measurement that went into it.'],
       eq: { sym: '250. mL × (1 L ÷ 1000 mL) = 0.250 L', words: 'given quantity × conversion factor = wanted quantity' },

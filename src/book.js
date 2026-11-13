@@ -4,6 +4,7 @@ import { MODELS } from './models.js';
 import { reviewById, reviewForUnit, practiceFor } from './data/review.js';
 import { reviewPage } from './review.js';
 import { readMore } from './data/openstax.js';
+import { SKETCH } from './sketches.js';
 
 const book = document.getElementById('book');
 const done = () => store.get('done') ?? {};
@@ -64,7 +65,7 @@ function lesson(l) {
         <div class="opts">${l.predict.opts.map((o, i) => `<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div><div class="out" aria-live="polite"></div></div>
       <div class="step" id="worked"><h2><i>Watch</i> A worked example</h2><p class="q">${esc(l.worked.q)}</p>
         <ol class="steps">${l.worked.steps.map((s, i) => `<li${i ? ' hidden' : ''}>${esc(s)}</li>`).join('')}</ol>
-        <p class="ans" hidden>${esc(l.worked.ans)}</p>
+        <p class="ans" hidden>${esc(l.worked.ans)}</p>${SKETCH[l.id] ? `<figure class="sketch" hidden>${SKETCH[l.id]()}</figure>` : ''}
         <p style="margin-top:8px"><button class="btn2 ghost" type="button" id="nextStep">Next step</button></p></div>
       <div class="step" id="try"><h2><i>Try</i> Your turn</h2><p class="q">${esc(l.try.q)}</p>
         ${l.try.opts ? `<div class="opts">${l.try.opts.map((o, i) => `<button type="button" data-i="${i}">${esc(o)}</button>`).join('')}</div>`
@@ -94,7 +95,7 @@ function lesson(l) {
   nextBtn.addEventListener('click', () => {
     const hidden = wk.querySelector('li[hidden]');
     if (hidden) hidden.hidden = false;
-    if (!wk.querySelector('li[hidden]')) { wk.querySelector('.ans').hidden = false; nextBtn.parentElement.remove(); }
+    if (!wk.querySelector('li[hidden]')) { wk.querySelector('.ans').hidden = false; const sk = wk.querySelector('.sketch'); if (sk) sk.hidden = false; nextBtn.parentElement.remove(); }
   });
 
   // try it

@@ -190,3 +190,10 @@ form.challenge { align-items: center; }
 .rq .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; } .rq .key { font: 600 20px/1.3 var(--hand); color: var(--part); margin-top: 8px; }
 .revlink { margin-top: 10px; font-size: 15.5px; } .revlink a { font-weight: 600; } .practice { font-size: 15px; }
 @media (max-width: 560px) { .model { overflow-x: auto; } .model svg[viewBox^="0 0 520"] { min-width: 430px; } .pans { grid-template-columns: 1fr; } }
+
+/* Part 2 models */
+.qrow { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin-bottom: 6px; font-size: 14.5px; } .qrow > span { min-width: 2em; font-weight: 650; color: var(--part); }
+.qrow button { border: 1.5px solid var(--line); background: var(--paper); border-radius: 5px; padding: 3px 9px; cursor: pointer; min-width: 2.3em; } .qrow button[aria-pressed="true"] { background: var(--part); border-color: var(--part); color: var(--paper); } .qrow button:disabled { opacity: 0.3; cursor: not-allowed; }
+.rxnline { font: 560 16.5px/1.4 var(--serif); margin: 0 0 8px; } .hstep { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 7px 10px; margin-bottom: 6px; border: 1.2px solid var(--line); border-radius: 5px; background: var(--paper-2); }
+.hstep .rxnline { margin: 0; flex: 1 1 14em; } .hstep b { font-variant-numeric: tabular-nums; white-space: nowrap; } .hbtn { display: inline-flex; gap: 6px; align-items: center; } .hbtn .btn2[aria-pressed="true"], #m24v[aria-pressed="true"] { background: var(--part); color: var(--paper); }
+.model .chips button:disabled { opacity: 0.4; cursor: default; } .aside { font-size: 13.5px; color: var(--ink-2); }

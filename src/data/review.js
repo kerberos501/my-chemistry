@@ -1,6 +1,7 @@
 // Review questions, from the course review decks. One set per part, placed after the part's last lesson.
 // q: the question; rxn: its equation; given: data printed with it; opts and a: the choices and the right one;
 // steps: the working, revealed a line at a time; key: the idea to keep; lesson: where it is taught;
+// pes: a photoelectron spectrum to draw, as peaks of [binding energy in MJ/mol, electrons];
 // calc: recomputes the stated answer, so the numbers on the page can be checked.
 
 const exam1 = {
@@ -105,7 +106,86 @@ const exam1 = {
   ],
 };
 
-export const REVIEWS = [exam1];
+const exam2 = {
+  id: 'review-2', unit: 'u2', title: 'Exam 2 review', sub: 'Thermochemistry, quantum theory and periodic trends',
+  questions: [
+    { n: 1, min: 1, lesson: '2.1', q: 'Which signs of q and w describe a system that is doing work on the surroundings while gaining heat from the surroundings?',
+      opts: ['q = +, w = −', 'q = −, w = +', 'q = +, w = +', 'q = −, w = −', 'None of these'], a: 0,
+      steps: ['q is heat into the system; w is work done on the system.', 'Gaining heat from the surroundings: q is positive.', 'Doing work on the surroundings: energy leaves the system as work, so w is negative.'],
+      key: 'Both signs are written from the system’s point of view: energy in is +, energy out is −.' },
+    { n: 2, min: 2, lesson: '2.2', q: 'What is the specific heat capacity of a metal if it takes 169.6 J to change the temperature of 15.0 g of the metal from 25.00 °C to 32.00 °C?',
+      opts: ['0.619 J/g·°C', '11.3 J/g·°C', '24.2 J/g·°C', '1.62 J/g·°C', '275 J/g·°C'], a: 3, calc: () => 169.6 / (15.0 * (32.00 - 25.00)), val: 1.62,
+      steps: ['Rearrange q = mcΔT for c: c = q ÷ (m × ΔT)', 'ΔT = 32.00 − 25.00 = 7.00 °C', 'c = 169.6 J ÷ (15.0 g × 7.00 °C) = 1.62 J/g·°C'],
+      key: 'The units of the answer, J/g·°C, tell you what to divide by.' },
+    { n: 3, min: 2, lesson: '2.4', q: 'When 0.262 mol of a weak base (A⁻) reacts with excess HCl, 6.91 kJ of energy is released as heat. What is ΔH for this reaction per mole of A⁻ consumed?',
+      opts: ['−37.9 kJ', '−66.0 kJ', '−26.4 kJ', '37.9 kJ', '26.4 kJ'], a: 2, calc: () => -6.91 / 0.262, val: -26.4,
+      steps: ['Sign first: heat is released, so the reaction is exothermic and ΔH is negative. That rules out the two positive choices.', 'Per mole means divide by the moles that reacted.', 'ΔH = −6.91 kJ ÷ 0.262 mol = −26.4 kJ per mole of A⁻'],
+      key: 'Decide the sign before touching the calculator. Dividing the wrong way round (0.262 ÷ 6.91) gives 0.0379, the source of the 37.9 choices.' },
+    { n: 4, min: 4, lesson: '2.5', q: 'Given the heats of the reactions below, calculate ΔH° for the target reaction.', rxn: 'ClF + F₂ → ClF₃',
+      given: '(1) 2 ClF + O₂ → Cl₂O + F₂O, ΔH° = +167.4 kJ\n(2) 2 ClF₃ + 2 O₂ → Cl₂O + 3 F₂O, ΔH° = +341.4 kJ\n(3) 2 F₂ + O₂ → 2 F₂O, ΔH° = −43.4 kJ',
+      opts: ['−217.5 kJ', '−130.2 kJ', '+217.5 kJ', '−108.7 kJ', 'None of these is within 5% of the answer'], a: 3, calc: () => (167.4 - 43.4 - 341.4) / 2, val: -108.7,
+      steps: ['Double the target, so that the given reactions fit with whole numbers: 2 ClF + 2 F₂ → 2 ClF₃.', 'Keep (1) as written: it supplies 2 ClF as a reactant. +167.4 kJ', 'Keep (3) as written: it supplies 2 F₂ as a reactant. −43.4 kJ', 'Reverse (2), so that 2 ClF₃ is a product. Reversing changes the sign: −341.4 kJ', 'Add them. Cl₂O, 3 F₂O and 2 O₂ cancel: 167.4 − 43.4 − 341.4 = −217.4 kJ for 2 ClF₃.', 'Halve it, because the target was doubled: −217.4 ÷ 2 = −108.7 kJ'],
+      key: 'The first choice is the trap for forgetting to halve at the end.' },
+    { n: 5, min: 4, lesson: '2.3', q: 'A 45.2 g piece of Al (molar heat capacity 24.03 J/°C·mol) is heated to 82.4 °C and dropped into a calorimeter containing water (specific heat capacity 4.18 J/g·°C) initially at 22.3 °C. The final temperature of the water is 24.8 °C. Ignoring significant figures, calculate the mass of water in the calorimeter.', given: 'Molar mass: Al = 26.98 g/mol',
+      opts: ['222 g', '5.99 kg', '6.71 g', '2.31 kg', 'None of the above'], a: 0, calc: () => 45.2 / 26.98 * 24.03 * (82.4 - 24.8) / (4.18 * (24.8 - 22.3)), val: 222,
+      steps: ['Heat lost by the aluminium equals heat gained by the water.', 'The heat capacity is per mole, so find moles: 45.2 g ÷ 26.98 g/mol = 1.675 mol Al', 'Both end at 24.8 °C, so the aluminium cools by 82.4 − 24.8 = 57.6 °C.', 'Heat lost: 1.675 mol × 24.03 J/°C·mol × 57.6 °C = 2319 J', 'The water warms by 24.8 − 22.3 = 2.5 °C.', 'm = 2319 J ÷ (4.18 J/g·°C × 2.5 °C) = 222 g'],
+      key: 'Read the units of the heat capacity: J/°C·mol needs moles, J/g·°C needs grams.' },
+    { n: 6, min: 2, lesson: '2.10', q: 'Which of the following statements is true?',
+      opts: ['The exact location of an electron can be determined if we know its energy.', 'An electron in a 2s orbital can have the same n, l and mₗ quantum numbers as an electron in a 3s orbital.', 'Ni has two unpaired electrons in its 3d orbitals.', 'In the build-up of atoms, electrons occupy the 4f orbitals before the 6s orbitals.', 'Only three quantum numbers are needed to describe an electron uniquely.'], a: 2,
+      steps: ['First statement: false. The uncertainty principle says position and momentum cannot both be known exactly.', 'Second: false. n differs: 2 for a 2s electron, 3 for a 3s electron.', 'Third: Ni is [Ar] 4s² 3d⁸. Eight d electrons: five go in singly, three pair up, leaving two unpaired. True.', 'Fourth: false. 6s fills before 4f.', 'Fifth: false. Four are needed: n, l, mₗ and mₛ.'],
+      key: 'Draw the five d boxes and fill them by Hund’s rule before counting unpaired electrons.' },
+    { n: 7, min: 2, lesson: '2.11', q: 'Which of the following statements is true?',
+      opts: ['The krypton 1s orbital is smaller than the helium 1s orbital because krypton’s nuclear charge draws the electrons closer.', 'The krypton 1s orbital is larger than the helium 1s orbital because krypton contains more electrons.', 'The krypton 1s orbital is smaller than the helium 1s orbital because krypton’s p and d orbitals crowd the s orbitals.', 'The krypton 1s orbital and the helium 1s orbital are the same size because both s orbitals can hold only two electrons.', 'The krypton 1s orbital is larger than the helium 1s orbital because krypton’s ionization energy is lower, so it is easier to remove electrons.'], a: 0,
+      steps: ['Nothing lies between the 1s electrons and the nucleus, so nothing shields them: they feel almost the full nuclear charge.', 'Krypton has 36 protons; helium has 2. Krypton’s 1s electrons are pulled in far more strongly.', 'Krypton’s other electrons are further out. They do not enlarge the 1s orbital, and they do not squeeze it.'],
+      key: 'The size of an orbital is set by the pull its electrons feel, not by how many electrons the atom has.' },
+    { n: 8, min: 1, lesson: '2.13', q: 'Which of the following lists of atoms is arranged in order of decreasing atomic radius?',
+      opts: ['Li > O > N > F', 'Li > N > O > F', 'F > O > N > Li', 'Na > Sr > O > F', 'Ca < Cs < S < Se'], a: 1,
+      steps: ['Li, N, O and F are all in period 2, in that order from left to right.', 'Across a period the outer shell stays the same while the nuclear charge rises, so the atoms shrink.', 'Li > N > O > F. In the fourth choice Sr (period 5) is larger than Na; the last choice uses “<”, which is increasing order.'],
+      key: 'Radius falls across a period and rises down a group.' },
+    { n: 9, min: 1, lesson: '2.10', q: 'The ground-state electron configuration of Te is:',
+      opts: ['[Kr] 5s² 4d¹⁰ 5p⁴', '[Kr] 5s² 5p⁶ 4d⁸', '[Kr] 5s² 5d¹⁰ 5p⁴', '[Kr] 5s² 4f¹⁴', '[Kr] 5s² 5d¹⁰ 5p⁶'], a: 0, calc: () => 36 + 2 + 10 + 4, val: 52,
+      steps: ['Te has Z = 52. [Kr] accounts for 36, leaving 16 electrons.', 'Period 5 fills 5s, then 4d, then 5p.', '5s² 4d¹⁰ 5p⁴: 2 + 10 + 4 = 16.'],
+      key: 'The d block is always one shell behind its period: 4d in period 5.' },
+    { n: 10, min: 2, lesson: '2.2', q: '50.0 g of H₂O in a coffee-cup calorimeter is initially at 22.0 °C. It absorbs 300. J of heat from an object placed in the calorimeter. Assuming all of the heat goes to the water, what is the approximate temperature of the water once thermal equilibrium is reached?', given: 'Specific heat capacity of H₂O = 4.18 J/g·°C',
+      opts: ['21.3 °C', '22.0 °C', '22.7 °C', '23.4 °C'], a: 3, calc: () => 22.0 + 300 / (50.0 * 4.18), val: 23.4,
+      steps: ['The water absorbs heat, so its temperature must rise: the first two choices are out.', 'ΔT = q ÷ (m × c) = 300. J ÷ (50.0 g × 4.18 J/g·°C) = 1.44 °C', 'Final temperature = 22.0 + 1.44 = 23.4 °C'],
+      key: 'Predict the direction of the change first; it removes half the choices.' },
+    { n: 11, min: 2, lesson: '2.6', q: 'Based on the ΔH°f values, which expression gives ΔH° for the reaction below?', rxn: 'Fe₂O₃(s) + 3 CO(g) → 2 Fe(s) + 3 CO₂(g)', given: 'ΔH°f in kJ/mol: Fe₂O₃(s) −826; CO(g) −111; Fe(s) 0; CO₂(g) −394',
+      opts: ['[(0) + (−394)] − [(−826) + (−111)]', '[2(0) + 3(−394)] − [(−826) + 3(−111)]', '[(−826) + 3(−111)] − [2(0) + 3(−394)]', '[(−826) + (−111)] − [(0) + (−394)]'], a: 1, calc: () => (2 * 0 + 3 * -394) - (-826 + 3 * -111), val: -23,
+      steps: ['ΔH° = Σ n ΔH°f(products) − Σ n ΔH°f(reactants)', 'Products: 2 Fe and 3 CO₂. Reactants: 1 Fe₂O₃ and 3 CO.', '[2(0) + 3(−394)] − [(−826) + 3(−111)] = −1182 − (−1159) = −23 kJ', 'The first and last choices leave out the coefficients; the third is reactants minus products.'],
+      key: 'Products minus reactants, each multiplied by its coefficient.' },
+    { n: 12, min: 2, lesson: '2.12', q: 'According to the complete photoelectron spectrum shown, which of the following is the element?', pes: { peaks: [[84, 2], [6, 2], [2, 6]], numbered: true, unit: 2 },
+      opts: ['Be', 'C', 'O', 'Ne', 'None of the above'], a: 3, calc: () => 2 + 2 + 6, val: 10,
+      steps: ['The height of a peak is proportional to the number of electrons in that sublevel.', 'The peak at the highest binding energy is the innermost sublevel, 1s, which holds 2 electrons.', 'The heights are in the ratio 1 : 1 : 3, so the peaks hold 2, 2 and 6 electrons: 1s² 2s² 2p⁶.', '2 + 2 + 6 = 10 electrons: neon.'],
+      key: 'Add up the electrons in every peak to get the atomic number.' },
+    { n: 13, min: 1, lesson: '2.12', q: 'In the spectrum shown, peaks 1 and 2 represent s sublevels. Which sublevel does peak 3 represent?', pes: { peaks: [[84, 2], [6, 2], [2, 6]], numbered: true, unit: 2 },
+      opts: ['s', 'p', 'd', 'f'], a: 1, calc: () => 3 * 2, val: 6,
+      steps: ['An s sublevel holds 2 electrons.', 'Peak 3 is three times as tall as an s peak: 3 × 2 = 6 electrons.', 'Capacities: s 2, p 6, d 10, f 14. Six electrons fill a p sublevel.'],
+      key: 'Relative height gives the number of electrons; the number of electrons gives the sublevel.' },
+    { n: 14, min: 2, lesson: '2.14', q: 'Which of the following ground-state electron configurations represents the atom with the highest second ionization energy?',
+      opts: ['1s² 2s²', '1s² 2s² 2p¹', '1s² 2s² 2p²', '1s² 2s² 2p⁶', '1s² 2s² 2p⁶ 3s¹'], a: 4,
+      steps: ['The second ionization energy removes the second electron. It is very large only when that electron comes from a noble-gas core.', 'For the first three atoms the second electron is still a valence electron.', '1s² 2s² 2p⁶ 3s¹ is Na. After losing its one 3s electron, Na⁺ is 1s² 2s² 2p⁶: the second electron comes from the core.', 'Ne also loses a 2p electron second, but its nuclear charge is 10 against sodium’s 11, so Na is higher (about 4560 against 3950 kJ/mol).'],
+      key: 'Look for the atom whose second electron has to come out of a filled inner shell.' },
+    { n: 15, min: 2, lesson: '2.12', q: 'The complete photoelectron spectrum of an element is given. Which of the following electron configurations is consistent with the spectrum?', pes: { peaks: [[208, 2], [18.7, 2], [13.5, 6], [1.95, 2], [1.06, 3]], unit: 1 },
+      opts: ['1s² 2s² 2p¹', '1s² 2s² 2p⁶ 3s² 3p³', '1s² 2s² 2p⁶ 3s² 3p⁶', '1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁵'], a: 1, calc: () => 2 + 2 + 6 + 2 + 3, val: 15,
+      steps: ['Read each peak against the gridlines: one gridline is one electron.', 'From the highest binding energy to the lowest, the heights are 2, 2, 6, 2 and 3.', 'Fill in the sublevels in order: 1s² 2s² 2p⁶ 3s² 3p³.', '15 electrons: phosphorus.'],
+      key: 'Five peaks mean five sublevels; the last peak is the valence sublevel.' },
+    { n: 16, min: 3, lesson: '2.8', q: 'Calculate the frequency of the light emitted by a hydrogen atom when its electron moves from the n = 5 to the n = 2 principal energy level.', given: 'Eₙ = −2.178 × 10⁻¹⁸ J ÷ n²;  h = 6.626 × 10⁻³⁴ J·s',
+      opts: ['6.90 × 10¹⁴ s⁻¹', '3.08 × 10¹⁵ s⁻¹', '2.06 × 10¹⁴ s⁻¹', '8.22 × 10¹⁴ s⁻¹'], a: 0, calc: () => 2.178e-18 * (1 / 4 - 1 / 25) / 6.626e-34 / 1e14, val: 6.90,
+      steps: ['ΔE = −2.178 × 10⁻¹⁸ J × (1 ÷ 2² − 1 ÷ 5²)', '= −2.178 × 10⁻¹⁸ J × (0.2500 − 0.0400) = −4.574 × 10⁻¹⁹ J', 'Negative: the atom loses this energy as a photon of energy 4.574 × 10⁻¹⁹ J.', 'ν = E ÷ h = 4.574 × 10⁻¹⁹ J ÷ 6.626 × 10⁻³⁴ J·s = 6.90 × 10¹⁴ s⁻¹'],
+      key: 'Final minus initial in the bracket; then use the size of ΔE for the photon.' },
+    { n: 17, min: 3, lesson: '2.8', q: 'Calculate the wavelength, in nanometres, of the light emitted by a hydrogen atom when its electron drops from the n = 6 to the n = 3 principal energy level.', given: 'Eₙ = −2.178 × 10⁻¹⁸ J ÷ n²;  h = 6.626 × 10⁻³⁴ J·s;  c = 2.998 × 10⁸ m/s',
+      opts: ['1.09 × 10⁻⁶ nm', '1.09 × 10³ nm', '2.16 × 10⁻⁶ nm', '2.16 × 10³ nm'], a: 1, calc: () => 6.626e-34 * 2.998e8 / (2.178e-18 * (1 / 9 - 1 / 36)) * 1e9 / 1e3, val: 1.09,
+      steps: ['ΔE = −2.178 × 10⁻¹⁸ J × (1 ÷ 3² − 1 ÷ 6²) = −1.815 × 10⁻¹⁹ J', 'The photon carries 1.815 × 10⁻¹⁹ J.', 'λ = hc ÷ E = (6.626 × 10⁻³⁴ J·s × 2.998 × 10⁸ m/s) ÷ 1.815 × 10⁻¹⁹ J = 1.09 × 10⁻⁶ m', 'Convert: 1.09 × 10⁻⁶ m × (10⁹ nm ÷ 1 m) = 1.09 × 10³ nm'],
+      key: 'The first choice is the answer in metres with “nm” written after it: the conversion was never done.' },
+    { n: 18, min: 3, lesson: '2.9', q: 'Which element’s last electron has the quantum numbers n = 5, l = 2, mₗ = +1 and mₛ = −½? Fill orbitals from mₗ = −2 up to +2, spin up first, and use the predicted (aufbau) configurations.',
+      opts: ['Ag', 'Au', 'Rg', 'Pt', 'Ds'], a: 1,
+      steps: ['n = 5 and l = 2: a 5d electron.', 'Electrons 1 to 5 go into the five 5d orbitals singly, spin up (Hund’s rule).', 'Electrons 6 to 9 pair up, starting from mₗ = −2. The ninth is in mₗ = +1 with spin down, mₛ = −½.', 'So the element ends in 5d⁹: [Xe] 6s² 4f¹⁴ 5d⁹ is Au.'],
+      key: 'This depends on the filling convention. Platinum’s measured configuration, [Xe] 6s¹ 4f¹⁴ 5d⁹, also ends in 5d⁹; the question assumes the predicted configurations.' },
+  ],
+};
+
+export const REVIEWS = [exam1, exam2];
 export const reviewById = Object.fromEntries(REVIEWS.map(r => [r.id, r]));
 export const reviewForUnit = Object.fromEntries(REVIEWS.map(r => [r.unit, r]));
 /** The review questions that practise one lesson. */
